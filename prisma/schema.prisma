@@ -1,0 +1,54 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Spot {
+  id           String   @id @default(cuid())
+  name         String
+  category     String   // Cafe, Coworking, Library, Restaurant, Hotel Lounge
+  address      String
+  city         String   @default("Santo Domingo")
+  zone         String   // e.g. Piantini, Bella Vista, Zona Colonial
+  lat          Float
+  lng          Float
+  isVerified   Boolean  @default(false)
+  verifiedPerk String?
+  imageUrl     String?
+  wifiRating   String   // Fast, Medium, Slow
+  noiseLevel   String   // Quiet, Moderate, Loud
+  outlets      String   // Abundant, Scarce, None
+  occupancy    String   // Low, Medium, High
+  overallScore Float    @default(4.5)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  reports Report[]
+  reviews Review[]
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  spotId     String
+  spot       Spot     @relation(fields: [spotId], references: [id], onDelete: Cascade)
+  noiseLevel String   // Quiet, Moderate, Loud
+  wifiRating String   // Fast, Medium, Slow
+  outlets    String   // Abundant, Scarce, None
+  occupancy  String   // Low, Medium, High
+  comment    String?
+  createdAt  DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  spotId    String
+  spot      Spot     @relation(fields: [spotId], references: [id], onDelete: Cascade)
+  userName  String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+}
