@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'WorkSpot RD - Encuentra tu Espacio de Trabajo Remoto Ideal',
@@ -24,7 +21,7 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className={`${inter.className} bg-slate-50 text-slate-900 antialiased min-h-screen`}>
+      <body className="font-sans bg-slate-50 text-slate-900 antialiased min-h-screen">
         {children}
       </body>
     </html>
